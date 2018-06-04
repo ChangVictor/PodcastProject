@@ -8,4 +8,8 @@ target 'Podcast' do
   # Pods for Podcast
     pod 'Alamofire', '~> 4.7'
 
+    pod 'SDWebImage', '~> 4.0'
+    platform :ios, '8.0'
+    use_frameworks!
+
 end

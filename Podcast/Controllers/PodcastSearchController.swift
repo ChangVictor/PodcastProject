@@ -11,10 +11,7 @@ import Alamofire
 
 class PodcastSearchController: UITableViewController, UISearchBarDelegate {
 	
-	var podcasts = [
-		Podcast(trackName: "Lets Build That App", artistName: "Brian Voong"),
-		Podcast(trackName: "Some Podcast", artistName: "Some Author"),
-		]
+	var podcasts = [Podcast]()
 	let cellId = "cellId"
 	
 	// Implementar UISerachController
@@ -36,6 +33,7 @@ class PodcastSearchController: UITableViewController, UISearchBarDelegate {
 		navigationItem.hidesSearchBarWhenScrolling = false
 		searchController.dimsBackgroundDuringPresentation = false
 		searchController.searchBar.delegate = self
+		definesPresentationContext = true
 	}
 	
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -47,6 +45,8 @@ class PodcastSearchController: UITableViewController, UISearchBarDelegate {
 
 	
 	fileprivate func setupTableView() {
+		// Elimina las lineas entre los Rows
+		tableView.tableFooterView = UIView()
 		//1. Registar la celda del tableView
 //		tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
 		
@@ -56,6 +56,19 @@ class PodcastSearchController: UITableViewController, UISearchBarDelegate {
 	}
 	
 	//MARK:- UITableView
+	
+	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let label = UILabel()
+		label.text = "Please enter a Search Term"
+		label.textAlignment = .center
+		label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+		return label
+	}
+	
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return 250
+	}
+	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return podcasts.count
 	}
@@ -65,12 +78,7 @@ class PodcastSearchController: UITableViewController, UISearchBarDelegate {
 		
 		let podcast = self.podcasts[indexPath.row]
 		cell.podcast = podcast
-		
-//		let podcast = self.podcasts[indexPath.row]
-//		cell.textLabel?.text = "\(podcast.trackName ?? "")\n\(podcast.artistName ?? "")"
-//		cell.textLabel?.numberOfLines = -1
-//		cell.imageView?.image = #imageLiteral(resourceName: "appicon")
-		
+
 		return cell
 	}
 	
