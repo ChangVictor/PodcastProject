@@ -19,6 +19,12 @@
 		EF4B81B620C4996400D651F0 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B81B520C4996400D651F0 /* APIService.swift */; };
 		EF4B81BA20C4BC7300D651F0 /* PodcastCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF4B81B920C4BC7300D651F0 /* PodcastCell.xib */; };
 		EF4B81BF20C4BF8E00D651F0 /* PodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4B81BE20C4BF8E00D651F0 /* PodcastCell.swift */; };
+		EFB1E26E20C7790D0063348E /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB1E26D20C7790D0063348E /* String.swift */; };
+		EFB1E27020C77A1A0063348E /* RSSFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB1E26F20C77A1A0063348E /* RSSFeed.swift */; };
+		EFFB310A20C5F85700BEE253 /* EpisodesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFB310920C5F85700BEE253 /* EpisodesController.swift */; };
+		EFFB310C20C70D7200BEE253 /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFB310B20C70D7200BEE253 /* Episode.swift */; };
+		EFFB310F20C7118600BEE253 /* EpisodesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFB310D20C7118600BEE253 /* EpisodesCell.swift */; };
+		EFFB311020C7118600BEE253 /* EpisodesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFFB310E20C7118600BEE253 /* EpisodesCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +44,12 @@
 		EF4B81B520C4996400D651F0 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		EF4B81B920C4BC7300D651F0 /* PodcastCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastCell.xib; sourceTree = "<group>"; };
 		EF4B81BE20C4BF8E00D651F0 /* PodcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastCell.swift; sourceTree = "<group>"; };
+		EFB1E26D20C7790D0063348E /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		EFB1E26F20C77A1A0063348E /* RSSFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSFeed.swift; sourceTree = "<group>"; };
+		EFFB310920C5F85700BEE253 /* EpisodesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesController.swift; sourceTree = "<group>"; };
+		EFFB310B20C70D7200BEE253 /* Episode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
+		EFFB310D20C7118600BEE253 /* EpisodesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesCell.swift; sourceTree = "<group>"; };
+		EFFB310E20C7118600BEE253 /* EpisodesCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EpisodesCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +102,7 @@
 		EF4B819920C44A4D00D651F0 /* Podcast */ = {
 			isa = PBXGroup;
 			children = (
+				EFB1E26A20C778E80063348E /* Extensions */,
 				EF4B81B420C4995300D651F0 /* API */,
 				EF4B81B120C47D7F00D651F0 /* DataModels */,
 				EF4B81AE20C47CF100D651F0 /* Controllers */,
@@ -109,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				EF4B81AF20C47D0300D651F0 /* PodcastSearchController.swift */,
+				EFFB310920C5F85700BEE253 /* EpisodesController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -117,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				EF4B81B220C47D9500D651F0 /* Podcast.swift */,
+				EFFB310B20C70D7200BEE253 /* Episode.swift */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -132,10 +147,21 @@
 		EF4B81BB20C4BE7C00D651F0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				EF4B81B920C4BC7300D651F0 /* PodcastCell.xib */,
 				EF4B81BE20C4BF8E00D651F0 /* PodcastCell.swift */,
+				EF4B81B920C4BC7300D651F0 /* PodcastCell.xib */,
+				EFFB310D20C7118600BEE253 /* EpisodesCell.swift */,
+				EFFB310E20C7118600BEE253 /* EpisodesCell.xib */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		EFB1E26A20C778E80063348E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EFB1E26D20C7790D0063348E /* String.swift */,
+				EFB1E26F20C77A1A0063348E /* RSSFeed.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,6 +227,7 @@
 				EF4B81A520C44A4F00D651F0 /* LaunchScreen.storyboard in Resources */,
 				EF4B81A220C44A4F00D651F0 /* Assets.xcassets in Resources */,
 				EF4B81BA20C4BC7300D651F0 /* PodcastCell.xib in Resources */,
+				EFFB311020C7118600BEE253 /* EpisodesCell.xib in Resources */,
 				EF4B81A020C44A4D00D651F0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -234,11 +261,13 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Podcast/Pods-Podcast-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/FeedKit/FeedKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FeedKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -253,12 +282,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFB1E27020C77A1A0063348E /* RSSFeed.swift in Sources */,
 				EF4B81B020C47D0300D651F0 /* PodcastSearchController.swift in Sources */,
+				EFB1E26E20C7790D0063348E /* String.swift in Sources */,
 				EF4B819D20C44A4D00D651F0 /* ViewController.swift in Sources */,
 				EF4B819B20C44A4D00D651F0 /* AppDelegate.swift in Sources */,
+				EFFB310F20C7118600BEE253 /* EpisodesCell.swift in Sources */,
+				EFFB310A20C5F85700BEE253 /* EpisodesController.swift in Sources */,
 				EF4B81AD20C44B4500D651F0 /* MainTabBarController.swift in Sources */,
 				EF4B81B620C4996400D651F0 /* APIService.swift in Sources */,
 				EF4B81B320C47D9500D651F0 /* Podcast.swift in Sources */,
+				EFFB310C20C70D7200BEE253 /* Episode.swift in Sources */,
 				EF4B81BF20C4BF8E00D651F0 /* PodcastCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

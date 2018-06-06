@@ -11,5 +11,7 @@ target 'Podcast' do
     pod 'SDWebImage', '~> 4.0'
     platform :ios, '8.0'
     use_frameworks!
+    pod 'FeedKit', '7.0.1'
+
 
 end
