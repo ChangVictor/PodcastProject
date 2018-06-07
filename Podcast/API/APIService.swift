@@ -47,7 +47,7 @@ class APIService {
 		Alamofire.request(baseiTunesSearchURL, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseData { (dataResponse) in
 			
 			if let err = dataResponse.error {
-				print("Failed to contact yahoo", err)
+				print("Failed to contact webserver", err)
 				return
 			}
 			
