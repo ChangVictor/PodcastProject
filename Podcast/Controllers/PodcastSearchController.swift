@@ -22,7 +22,9 @@ class PodcastSearchController: UITableViewController, UISearchBarDelegate {
 
 		setupSearchBar()
 		setupTableView()
-
+		
+		// Para iniciar la app con una busqueda predeterminada
+		searchBar(searchController.searchBar, textDidChange: "NPR")
 	}
 	
 	//MARK:- Setups
@@ -37,13 +39,18 @@ class PodcastSearchController: UITableViewController, UISearchBarDelegate {
 		definesPresentationContext = true
 	}
 	
+	var timer: Timer?
+	
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-		APIService.shared.fetchPodcasts(searchText: searchText) { (podcasts) in
-			self.podcasts = podcasts
-			self.tableView.reloadData()
-		}
+		
+		timer?.invalidate()
+		timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (timer) in
+			APIService.shared.fetchPodcasts(searchText: searchText) { (podcasts) in
+				self.podcasts = podcasts
+				self.tableView.reloadData()
+			}
+		})
 	}
-
 	
 	fileprivate func setupTableView() {
 		// Elimina las lineas entre los Rows
@@ -66,6 +73,15 @@ class PodcastSearchController: UITableViewController, UISearchBarDelegate {
 		navigationController?.pushViewController(episodesController, animated: true)
 		
 	}
+	// Llama a un view.xib que contiene un loading
+	var podcastSearchView = Bundle.main.loadNibNamed("PodcastsSearchingView", owner: self, options: nil)?.first as? UIView
+	override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+			return podcastSearchView
+		}
+	
+	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		return podcasts.isEmpty && searchController.searchBar.text?.isEmpty == false ? 200 : 0
+	}
 	
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let label = UILabel()
@@ -76,7 +92,7 @@ class PodcastSearchController: UITableViewController, UISearchBarDelegate {
 	}
 	
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return self.podcasts.count > 0 ? 0 : 250
+		return self.podcasts.isEmpty && searchController.searchBar.text?.isEmpty == true ? 250 : 0
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

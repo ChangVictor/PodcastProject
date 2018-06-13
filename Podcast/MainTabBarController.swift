@@ -19,9 +19,16 @@ class MainTabBarController: UITabBarController {
 		
 		setupViewControllers()
 		
+		setupPlayerDetailView()
+		
 	}
 	
 	//MARK:- Setup Functions
+	
+	fileprivate func setupPlayerDetailView() {
+		
+	}
+
 	
 	func setupViewControllers() {
 		

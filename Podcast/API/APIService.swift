@@ -22,20 +22,24 @@ class APIService {
 		let secureFeedUrl = feedUrl.contains("https") ? feedUrl : feedUrl.replacingOccurrences(of: "http", with: "https")
 		
 		guard let url = URL(string: secureFeedUrl) else { return }
-		let parser = FeedParser(URL: url)
-		parser?.parseAsync(result: { (result) in
-			print("Succesfully parsed: ", result.isSuccess)
-			
-			
-			if let err = result.error {
-				print("Failed to parse XML Feed: ", err)
-				return
-			}
-			
-			guard let feed = result.rssFeed else { return }
-			let episodes = feed.toEpisodes()
-			completionHandler(episodes)
-		})
+		
+		// Mnada el bloque de codigo a un background thread?
+		DispatchQueue.global(qos: .background).async {
+			let parser = FeedParser(URL: url)
+			parser?.parseAsync(result: { (result) in
+				print("Succesfully parsed: ", result.isSuccess)
+				
+				
+				if let err = result.error {
+					print("Failed to parse XML Feed: ", err)
+					return
+				}
+				
+				guard let feed = result.rssFeed else { return }
+				let episodes = feed.toEpisodes()
+				completionHandler(episodes)
+			})
+		}
 		
 	}
 	
