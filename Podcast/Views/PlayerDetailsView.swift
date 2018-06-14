@@ -14,6 +14,7 @@ class PlayerDetailsView: UIView {
 	var episode: Episode! {
 		didSet {
 			
+			miniTitleLabel.text = episode.title
 			episodeTitleLabel.text = episode.title
 			authorLabel.text = episode.author
 			
@@ -21,6 +22,7 @@ class PlayerDetailsView: UIView {
 			
 			guard let url = URL(string: episode.imageUrl ?? "") else { return }
 			episodeImageView.sd_setImage(with: url)
+			miniEpisodeImageView.sd_setImage(with: url)
 			
 		}
 	}
@@ -65,6 +67,7 @@ class PlayerDetailsView: UIView {
 		// call some custom code
 		super.awakeFromNib()
 		
+		addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapMaximize)))
 		
 		observePlayerCurrentTime()
 		
@@ -79,6 +82,12 @@ class PlayerDetailsView: UIView {
 		}
 	}
 	
+	@objc func handleTapMaximize() {
+		print("Tapping to Maximize")
+		let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController
+		mainTabBarController?.maximizePlayerDetails(episode: nil) // nil: no se le pasa nigun episodio, simplemente se maximiza la vista
+	}
+	
 	static func initFromNib() -> PlayerDetailsView {
 		return Bundle.main.loadNibNamed("PlayerDetailsView", owner: self, options: nil)?.first as! PlayerDetailsView
 	}
@@ -89,10 +98,8 @@ class PlayerDetailsView: UIView {
 	
 	fileprivate func enlargeEpisodeImageView() {
 		UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-			
 			self.episodeImageView.transform = .identity
-			
-		}, completion: nil)
+		})
 	}
 	
 	fileprivate let shrunkenTransform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -100,11 +107,29 @@ class PlayerDetailsView: UIView {
 	fileprivate func shrinkEpisodeImageView() {
 		UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
 			self.episodeImageView.transform = self.shrunkenTransform
-		}, completion: nil)
+		})
 	}
 	
 	
 	// MARK:- IB Actions & Outlets
+	
+	@IBOutlet weak var miniEpisodeImageView: UIImageView!
+	@IBOutlet weak var miniTitleLabel: UILabel!
+	@IBOutlet weak var miniPlayPauseButton: UIButton! {
+		didSet {
+			miniPlayPauseButton.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
+			miniPlayPauseButton.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+		}
+	}
+	
+	@IBOutlet weak var miniFastForwardButton: UIButton! {
+		didSet {
+			miniFastForwardButton.addTarget(self, action: #selector(handleFastForward(_:)), for: .touchUpInside)
+		}
+	}
+	
+	@IBOutlet weak var miniPlayerView: UIStackView!
+	@IBOutlet weak var maximizedStackView: UIStackView!
 	
 	@IBOutlet weak var currentTimeLabel: UILabel!
 	
@@ -121,11 +146,8 @@ class PlayerDetailsView: UIView {
 	}
 	
 	@IBAction func handleCurrentTimeSliderChange(_ sender: Any) {
-		
 		let percentage = currentTimeSlider.value
-		
 		guard let duration = player.currentItem?.duration else { return }
-		
 		let durationInSeconds = CMTimeGetSeconds(duration)
 		let seekTimeInSeconds = Float64(percentage) * durationInSeconds
 		let seekTime = CMTimeMakeWithSeconds(seekTimeInSeconds, Int32(NSEC_PER_SEC)) // Int32(NSEC_PER_SEC) -> escala de number of seconds per seconds... si asignas valor 1 sigue funcionando...
@@ -166,10 +188,12 @@ class PlayerDetailsView: UIView {
 		if player.timeControlStatus == .paused {
 			player.play()
 			playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+			miniPlayPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
 			enlargeEpisodeImageView()
 		} else {
 			player.pause()
 			playPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+			miniPlayPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
 			shrinkEpisodeImageView()
 		}
 	}
@@ -182,9 +206,9 @@ class PlayerDetailsView: UIView {
 	}
 	
 	@IBAction func handleDismiss (_ sender: Any) {
-		
-		self.removeFromSuperview()
-		
+//		self.removeFromSuperview()
+		let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController
+		mainTabBarController?.minimizePlayerDetails()
 	}
 	
 }
