@@ -178,7 +178,7 @@ class PlayerDetailsView: UIView {
 	@IBOutlet weak var playPauseButton: UIButton! {
 		didSet {
 			
-			playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+			playPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
 			playPauseButton.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
 		}
 	}
