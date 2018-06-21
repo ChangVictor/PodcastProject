@@ -17,9 +17,16 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CNC-ya-D77">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CNC-ya-D77" userLabel="MiniPlayerView">
                     <rect key="frame" x="0.0" y="44" width="375" height="64"/>
                     <subviews>
+                        <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mIJ-au-2XO">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="0.66666666666666663"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" id="GUF-AM-T5Y"/>
+                            </constraints>
+                        </view>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dgr-aF-4jP">
                             <rect key="frame" x="8" y="8" width="359" height="48"/>
                             <subviews>
@@ -58,8 +65,11 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="64" id="1N6-M9-W5O"/>
                         <constraint firstItem="dgr-aF-4jP" firstAttribute="top" secondItem="CNC-ya-D77" secondAttribute="top" constant="8" id="9FG-fJ-eMu"/>
+                        <constraint firstAttribute="trailing" secondItem="mIJ-au-2XO" secondAttribute="trailing" id="FUi-93-jgi"/>
                         <constraint firstAttribute="bottom" secondItem="dgr-aF-4jP" secondAttribute="bottom" constant="8" id="IAx-gB-GrG"/>
                         <constraint firstItem="dgr-aF-4jP" firstAttribute="leading" secondItem="CNC-ya-D77" secondAttribute="leading" constant="8" id="eAY-Ov-jl9"/>
+                        <constraint firstItem="mIJ-au-2XO" firstAttribute="leading" secondItem="CNC-ya-D77" secondAttribute="leading" id="iha-f6-ZLU"/>
+                        <constraint firstItem="mIJ-au-2XO" firstAttribute="top" secondItem="CNC-ya-D77" secondAttribute="top" id="sZL-d7-XwA"/>
                         <constraint firstAttribute="trailing" secondItem="dgr-aF-4jP" secondAttribute="trailing" constant="8" id="tgD-BL-5j7"/>
                     </constraints>
                 </view>

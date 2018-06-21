@@ -13,7 +13,6 @@ class PlayerDetailsView: UIView {
 	
 	var episode: Episode! {
 		didSet {
-			
 			miniTitleLabel.text = episode.title
 			episodeTitleLabel.text = episode.title
 			authorLabel.text = episode.author
@@ -23,19 +22,16 @@ class PlayerDetailsView: UIView {
 			guard let url = URL(string: episode.imageUrl ?? "") else { return }
 			episodeImageView.sd_setImage(with: url)
 			miniEpisodeImageView.sd_setImage(with: url)
-			
 		}
 	}
 	
 	fileprivate func playEpisode() {
-		
 		print("Trying to play episode at url: ", episode.streamUrl)
 		
 		guard let url = URL(string: episode.streamUrl) else { return }
 		let playerItem = AVPlayerItem(url: url)
 		player.replaceCurrentItem(with: playerItem)
 		player.play()
- 
 	}
 	
 	var player: AVPlayer = {
@@ -63,11 +59,12 @@ class PlayerDetailsView: UIView {
 		self.currentTimeSlider.value = Float(percentage)
 	}
 	
+	var panGesture: UIPanGestureRecognizer!
+	
 	override func awakeFromNib() {
-		// call some custom code
 		super.awakeFromNib()
 		
-		addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapMaximize)))
+		setupGestures()
 		
 		observePlayerCurrentTime()
 		
@@ -82,12 +79,30 @@ class PlayerDetailsView: UIView {
 		}
 	}
 	
-	@objc func handleTapMaximize() {
-		print("Tapping to Maximize")
-		let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController
-		mainTabBarController?.maximizePlayerDetails(episode: nil) // nil: no se le pasa nigun episodio, simplemente se maximiza la vista
+	fileprivate func setupGestures() {
+		addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapMaximize)))
+		panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+		miniPlayerView.addGestureRecognizer(panGesture)
+		
+		maximizedStackView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handleDismissalPan)))
+		
 	}
 	
+	@objc func handleDismissalPan(gesture: UIPanGestureRecognizer) {
+		if gesture.state == .changed {
+			let translation = gesture.translation(in: superview)
+			maximizedStackView.transform = CGAffineTransform(translationX: 0, y: translation.y)
+		} else if gesture.state == .ended {
+			let translation = gesture.translation(in: superview)
+			UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+				self.maximizedStackView.transform = .identity
+				if translation.y > 50 {
+					UIApplication.mainTabBarController()?.minimizePlayerDetails()
+				}
+			})
+		}
+	}
+		
 	static func initFromNib() -> PlayerDetailsView {
 		return Bundle.main.loadNibNamed("PlayerDetailsView", owner: self, options: nil)?.first as! PlayerDetailsView
 	}
